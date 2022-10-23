@@ -14,11 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: babylittlepony/docker-repo:auth
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          image: babylittlepony/auth
 ---
 apiVersion: v1
 kind: Service
