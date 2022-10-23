@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
+import { DatabaseConnectionError } from "../errors/database-connection-error";
+import { RequestValidationError } from "../errors/request-validation-error";
+
 const router = express.Router();
 
 router.post(
@@ -16,7 +19,7 @@ router.post(
     const error = validationResult(req);
 
     if (!error.isEmpty()) {
-      return res.status(400).send(error.array());
+      throw new RequestValidationError(error.array());
     }
 
     const { email, password } = req.body;
@@ -30,6 +33,9 @@ router.post(
       "Password: ",
       password
     );
+
+    throw new DatabaseConnectionError();
+
     res.send({});
   }
 );
