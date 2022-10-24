@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { DatabaseConnectionError } from "../errors/database-connection-error";
-import { RequestValidationError } from "../errors/request-validation-error";
+import { CustomError } from "../errors/custom-error";
 
 export const errorHandler = function (
   err: Error,
@@ -9,19 +8,8 @@ export const errorHandler = function (
   res: Response,
   next: NextFunction
 ) {
-  if (err instanceof RequestValidationError) {
-    const error = err.errors.map((err) => {
-      return {
-        message: err.msg,
-        field: err.param,
-      };
-    });
-    return res.status(400).json({ error });
-  }
-  if (err instanceof DatabaseConnectionError) {
-    return res
-      .status(503)
-      .json({ errors: [{ message: err.message, field: "database" }] });
+  if (err instanceof CustomError) {
+    return res.status(err.statusCode).json({ errors: err.serializeError() });
   }
 
   res.status(500).json({ errors: [{ message: "Unknown error has occurred" }] });
