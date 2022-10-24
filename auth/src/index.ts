@@ -1,4 +1,5 @@
 import express from "express";
+import "express-async-errors";
 import morgan from "morgan";
 
 import { currentUserRouter } from "./routes/current-user";
@@ -19,12 +20,12 @@ app.use(signInRouter);
 app.use(signOutRouter);
 app.use(signUpRouter);
 
-app.all("*", () => {
+app.all("*", async () => {
   throw new NotFoundError();
 });
 
 app.use(errorHandler);
 
 app.listen(3000, () => {
-  console.log("Auth on 3000, v7");
+  console.log("Auth on 3000, v8");
 });

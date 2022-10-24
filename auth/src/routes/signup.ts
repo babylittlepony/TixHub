@@ -15,7 +15,7 @@ router.post(
       .isLength({ min: 4, max: 16 })
       .withMessage("Enter valid password!, must be between 4 to 16 character"),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const error = validationResult(req);
 
     if (!error.isEmpty()) {
