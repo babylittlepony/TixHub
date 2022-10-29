@@ -26,6 +26,10 @@ app.use(
 
 const url = "mongodb://auth-mongo-srv:27017/auth";
 const startDB = async () => {
+  if (!process.env.jwt_key) {
+    throw new Error("jwt secret key not found");
+  }
+
   try {
     await mongoose.connect(url);
     console.log("Connected to mongodb");
@@ -47,5 +51,5 @@ app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Auth on 3000, v8");
+  startDB();
 });
-startDB();

@@ -32,6 +32,7 @@ router.post(
     }
 
     const user = User.build({ email, password });
+
     await user
       .save()
       .then((data) => {
@@ -41,22 +42,14 @@ router.post(
             id: data.id,
             email: data.email,
           },
-          "averythiiieeeckkksecretkey"
+          process.env.jwt_key!
         );
         // Store JWT in session
         req.session = {
           jwt: userJwt,
         };
 
-        console.log(
-          "User created!",
-          "\n",
-          "Email: ",
-          data.email,
-          "\n",
-          "Password: ",
-          data.password
-        );
+        console.log("User created!");
       })
       .catch((error) => console.log(error));
 
