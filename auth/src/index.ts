@@ -50,6 +50,6 @@ app.all("*", async () => {
 app.use(errorHandler);
 
 app.listen(3000, () => {
-  console.log("Auth on 3000, v8");
+  console.log("Auth on 3000, v17");
   startDB();
 });
