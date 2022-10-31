@@ -1,12 +1,10 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
+import jwt from "jsonwebtoken";
 
 import { BadRequestError } from "../errors/bad-request-error";
-
 import { validateRequest } from "../middleware/validate-request";
-
 import { User } from "../models/user";
-
 import { Password } from "../services/password";
 
 const router = express.Router();
@@ -21,10 +19,30 @@ router.post(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
     if (!user) {
-      throw new BadRequestError("User not found, please sign up");
+      throw new BadRequestError("Invalid credentials");
     }
+
+    const passwordMatch = await Password.compare(user.password, password);
+    if (!passwordMatch) {
+      throw new BadRequestError("Invalid credentials");
+    }
+
+    // Generate JWT
+    const userJwt = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.jwt_key!
+    );
+    // Store JWT in session
+    req.session = {
+      jwt: userJwt,
+    };
+
+    res.status(200).json({ message: "Login success" });
   }
 );
 
