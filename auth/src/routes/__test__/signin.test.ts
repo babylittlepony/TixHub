@@ -3,26 +3,34 @@ import request from "supertest";
 import { app } from "../../app";
 
 /*------------------------------Testing------------------------------*/
-it("returns a 201 on successful signup", async () => {
-  return request(app)
+it("return 200 on signin", async () => {
+  await request(app)
     .post("/api/users/signup")
     .send({
       email: "test@gmail.com",
       password: "password",
     })
     .expect(201);
+
+  await request(app)
+    .post("/api/users/signin")
+    .send({
+      email: "test@gmail.com",
+      password: "password",
+    })
+    .expect(200);
 });
 
-it("returns a 400 with invalid email and password", async () => {
+it("invalid password in existing user", async () => {
   await request(app)
     .post("/api/users/signup")
     .send({
-      email: "testgmail.com",
+      email: "test@gmail.com",
       password: "password",
     })
-    .expect(400);
+    .expect(201);
   await request(app)
-    .post("/api/users/signup")
+    .post("/api/users/signin")
     .send({
       email: "test@gmail.com",
       password: "p",
@@ -30,7 +38,7 @@ it("returns a 400 with invalid email and password", async () => {
     .expect(400);
 });
 
-it("disallows duplicate emails", async () => {
+it("invalid password in existing user", async () => {
   await request(app)
     .post("/api/users/signup")
     .send({
@@ -38,25 +46,14 @@ it("disallows duplicate emails", async () => {
       password: "password",
     })
     .expect(201);
-
-  await request(app)
-    .post("/api/users/signup")
-    .send({
-      email: "test@gmail.com",
-      password: "password",
-    })
-    .expect(400);
-});
-
-it("Sets a cookie after signup", async () => {
   const response = await request(app)
-    .post("/api/users/signup")
+    .post("/api/users/signin")
     .send({
       email: "test@gmail.com",
       password: "password",
     })
-    .expect(201);
+    .expect(200);
 
-  expect(response.get("Set-Cookie")).toBeDefined();
+  expect(response.get("Set-Cookie"));
 });
 /*------------------------------Testing------------------------------*/

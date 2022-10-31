@@ -21,11 +21,13 @@ router.post(
 
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("Invalid credentials");
       throw new BadRequestError("Invalid credentials");
     }
 
     const passwordMatch = await Password.compare(user.password, password);
     if (!passwordMatch) {
+      console.log("Invalid credentials");
       throw new BadRequestError("Invalid credentials");
     }
 
@@ -42,6 +44,7 @@ router.post(
       jwt: userJwt,
     };
 
+    console.log("Login success");
     res.status(200).json({ message: "Login success" });
   }
 );
