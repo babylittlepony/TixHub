@@ -19,7 +19,7 @@ const startDB = async () => {
 
 /*---------------Start Server---------------*/
 app.listen(3000, () => {
-  console.log("Auth on 3000, v18");
+  console.log("Auth on 3000, v20");
   startDB();
 });
 /*---------------Start Server---------------*/
