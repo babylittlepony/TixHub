@@ -7,7 +7,7 @@ export default () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { doRequest, errors } = useRequest({
-    url: "/api/users/signup",
+    url: "/api/users/signin",
     method: "post",
     body: {
       email,
@@ -26,7 +26,7 @@ export default () => {
       onSubmit={onSubmit}
       className="flex flex-col justify-center items-center h-screen"
     >
-      <h1 className="text-4xl font-bold mb-2">Sign Up</h1>
+      <h1 className="text-4xl font-bold mb-2">Sign In</h1>
       <div className="py-4 flex-col inline-flex text-center">
         <label>Email Address</label>
         <input
@@ -46,7 +46,7 @@ export default () => {
         />
       </div>
       {errors}
-      <button className="p-2 m-4 bg-orange-400 ">Sign Up</button>
+      <button className="p-2 m-4 bg-orange-400 ">Sign In</button>
     </form>
   );
 };
