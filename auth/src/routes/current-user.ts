@@ -1,6 +1,6 @@
 import express from "express";
 
-import { extractJwt } from "../middleware/extract-jwt";
+import { extractJwt } from "@tixproject/common";
 
 const router = express.Router();
 

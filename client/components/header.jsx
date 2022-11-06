@@ -10,7 +10,9 @@ export default ({ currentUser }) => {
     .map(({ label, href }) => {
       return (
         <Link href={href}>
-          <p className="px-4">{label}</p>
+          <p className="px-4" key={label}>
+            {label}
+          </p>
         </Link>
       );
     });
