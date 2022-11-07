@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticket-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticket
+  template:
+    metadata:
+      labels:
+        app: ticket
+    spec:
+      containers:
+        - name: ticket
+          image: babylittlepony/ticket
+          env:
+            - name: MONGO_URI
+              value: "mongodb://ticket-mongo-srv:27017/tickets"
+            - name: jwt_key
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: jwt_key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticket-srv
+spec:
+  selector:
+    app: ticket
+  ports:
+    - port: 3000
+      targetPort: 3000
+      name: ticket
+      protocol: TCP

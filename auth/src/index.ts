@@ -4,12 +4,14 @@ import { app } from "./app";
 
 /*---------------Start Database---------------*/
 const startDB = async () => {
-  const url = "mongodb://auth-mongo-srv:27017/auth";
   if (!process.env.jwt_key) {
     throw new Error("jwt secret key not found");
   }
+  if (!process.env.MONGO_URI) {
+    throw new Error("Mongo URI not found");
+  }
   try {
-    await mongoose.connect(url);
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to mongodb");
   } catch (error) {
     console.log(error);
@@ -19,7 +21,7 @@ const startDB = async () => {
 
 /*---------------Start Server---------------*/
 app.listen(3000, () => {
-  console.log("Auth on 3000, v20");
-  startDB();
+  console.log("Auth service is running...");
+  startDB().catch((err) => console.log(err));
 });
 /*---------------Start Server---------------*/
