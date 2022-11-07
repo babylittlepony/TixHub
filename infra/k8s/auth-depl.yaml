@@ -17,7 +17,7 @@ spec:
           image: babylittlepony/auth
           env:
             - name: MONGO_URI
-              value: "mongodb://auth-mongo-srv:27017/tickets"
+              value: "mongodb://auth-mongo-srv:27017/auth"
             - name: jwt_key
               valueFrom:
                 secretKeyRef:
