@@ -15,3 +15,47 @@ it("can only be accessed with authorized user", async () => {
 
   expect(response.statusCode).not.toEqual(401);
 });
+
+it("returns an error if invalid title is provided", async () => {
+  // Title is empty
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signin())
+    .send({ title: "", price: 5 })
+    .expect(400);
+
+  // Not provided title
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signin())
+    .send({ price: 5 })
+    .expect(400);
+
+  // expect(response.statusCode).not.toEqual(401);
+});
+
+it("returns an error if invalid price is provided", async () => {
+  // Price is negative
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signin())
+    .send({ title: "test", price: -10 })
+    .expect(400);
+
+  // Not provided price
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signin())
+    .send({ title: "tets" })
+    .expect(400);
+
+  // expect(response.statusCode).not.toEqual(401);
+});
+
+it("creates a ticket with valid inputs", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signin())
+    .send({ title: "Test", price: 10 })
+    .expect(200);
+});
