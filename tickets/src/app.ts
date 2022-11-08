@@ -3,7 +3,7 @@ import "express-async-errors";
 import morgan from "morgan";
 import cookieSession from "cookie-session";
 
-import { errorHandler, NotFoundError } from "@tixproject/common";
+import { errorHandler, NotFoundError, extractJwt } from "@tixproject/common";
 
 import { createTicketRouter } from "./routes/new";
 
@@ -20,6 +20,7 @@ app.use(
     secure: process.env.NODE_ENV !== "test",
   })
 );
+app.use(extractJwt);
 /*-----------Middleware-----------*/
 
 /*-----------Routes-----------*/
