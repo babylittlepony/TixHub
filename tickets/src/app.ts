@@ -6,6 +6,7 @@ import cookieSession from "cookie-session";
 import { errorHandler, NotFoundError, extractJwt } from "@tixproject/common";
 
 import { createTicketRouter } from "./routes/new";
+import { showTicketRouter } from "./routes/show";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(extractJwt);
 
 /*-----------Routes-----------*/
 app.use(createTicketRouter);
+app.use(showTicketRouter);
 /*-----------Routes-----------*/
 
 /*-----------Error-----------*/
