@@ -37,9 +37,7 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
-
-    console.log("Updated ticket: ", ticket);
-    res.status(200).send({});
+    res.status(200).json({});
   }
 );
 
