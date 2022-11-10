@@ -5,13 +5,14 @@ import jwt from "jsonwebtoken";
 import { createMongoId } from "../function/create-mongoId";
 
 declare global {
+  // Declaring global function
   var signin: () => string[];
 }
 
 let mongo: any;
 // Start Mongo Memory Server first
 beforeAll(async () => {
-  const mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
@@ -32,6 +33,7 @@ afterAll(async () => {
 });
 
 global.signin = () => {
+  //Creating the global function
   const payload = {
     id: createMongoId(),
     email: "test@test.com",

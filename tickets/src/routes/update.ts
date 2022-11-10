@@ -13,6 +13,14 @@ const router = express.Router();
 router.put(
   "/api/tickets/:id",
   requireAuth,
+  [
+    body("title").notEmpty().withMessage("Title is required"),
+    body("price")
+      .notEmpty()
+      .isFloat({ gt: 0 })
+      .withMessage("Invalid price, must be greater than 0"),
+  ],
+  validateRequest,
   async (req: Request, res: Response) => {
     const ticket = await Ticket.findById(req.params.id);
 
@@ -24,7 +32,14 @@ router.put(
       throw new NotAuthorizedError();
     }
 
-    res.send({});
+    ticket.set({
+      title: req.body.title,
+      price: req.body.price,
+    });
+    await ticket.save();
+
+    console.log("Updated ticket: ", ticket);
+    res.status(200).send({});
   }
 );
 

@@ -2,12 +2,11 @@ import request from "supertest";
 
 import { app } from "../app";
 
-const createTicket = () => {
+const createTicket = (cookie?: string[]) => {
   return request(app)
     .post("/api/tickets")
-    .set("Cookie", signin())
-    .send({ title: "Test", price: 10 })
-    .expect(201);
+    .set("Cookie", cookie! || signin())
+    .send({ title: "Test", price: 10 });
 };
 
 const ticketNoTitle = () => {
