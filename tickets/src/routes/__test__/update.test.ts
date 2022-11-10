@@ -32,13 +32,13 @@ it("returns 400 if user provides invalid title or price", async () => {
   const cookie = signin();
   const res = await createTicket(cookie).expect(201);
 
-  const t = await request(app)
+  await request(app)
     .put(`/api/tickets/${res.body.id}`)
     .set("Cookie", cookie)
     .send({ title: "", price: 69 })
     .expect(400);
 
-  const p = await request(app)
+  await request(app)
     .put(`/api/tickets/${res.body.id}`)
     .set("Cookie", cookie)
     .send({ title: "test", price: -69 })
