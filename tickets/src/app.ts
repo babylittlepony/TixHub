@@ -7,6 +7,8 @@ import { errorHandler, NotFoundError, extractJwt } from "@tixproject/common";
 
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
+import { ticketListRouter } from "./routes/index";
+import { updateTicketRouter } from "./routes/update";
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use(extractJwt);
 /*-----------Routes-----------*/
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(ticketListRouter);
+app.use(updateTicketRouter);
 /*-----------Routes-----------*/
 
 /*-----------Error-----------*/

@@ -3,9 +3,9 @@ import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
 import { NotFoundError } from "@tixproject/common";
 
-const route = express.Router();
+const router = express.Router();
 
-route.get("/api/tickets/:id", async (req: Request, res: Response) => {
+router.get("/api/tickets/:id", async (req: Request, res: Response) => {
   const ticket = await Ticket.findById(req.params.id);
 
   if (!ticket) {
@@ -15,4 +15,4 @@ route.get("/api/tickets/:id", async (req: Request, res: Response) => {
   res.json(ticket);
 });
 
-export { route as showTicketRouter };
+export { router as showTicketRouter };
