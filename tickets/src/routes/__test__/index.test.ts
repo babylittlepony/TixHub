@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import { app } from "../../app";
-import { createTicket } from "../../function/create-ticket";
+import { createTicket } from "../../functions/create-ticket";
 
 it("returns a list of tickets", async () => {
   await createTicket();

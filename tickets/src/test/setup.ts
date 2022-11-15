@@ -2,7 +2,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-import { createMongoId } from "../function/create-mongoId";
+import { createMongoId } from "../functions/create-mongoId";
 
 declare global {
   // Declaring global function

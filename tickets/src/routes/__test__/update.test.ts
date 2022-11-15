@@ -1,8 +1,8 @@
 import request from "supertest";
 
 import { app } from "../../app";
-import { createMongoId } from "../../function/create-mongoId";
-import { createTicket } from "../../function/create-ticket";
+import { createMongoId } from "../../functions/create-mongoId";
+import { createTicket } from "../../functions/create-ticket";
 
 it("returns 404 if tickets id doesnt exist", async () => {
   const id = createMongoId();

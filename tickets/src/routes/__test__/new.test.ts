@@ -7,7 +7,7 @@ import {
   ticketNegativePrice,
   ticketNoPrice,
   ticketNoTitle,
-} from "../../function/create-ticket";
+} from "../../functions/create-ticket";
 import { Ticket } from "../../models/ticket";
 
 it("has a route handler to /api/tickets for POST req", async () => {

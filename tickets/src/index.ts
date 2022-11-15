@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import { app } from "./app";
+import { natsWrapper } from "../nats-wrapper";
 
 /*---------------Start Database---------------*/
 const startDB = async () => {
@@ -11,6 +12,7 @@ const startDB = async () => {
     throw new Error("Mongo URI not found");
   }
   try {
+    await natsWrapper.connect("ticket", "test", "http://nats-srv:4222");
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to mongodb");
   } catch (error) {
