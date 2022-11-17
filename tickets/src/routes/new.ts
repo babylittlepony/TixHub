@@ -4,7 +4,7 @@ import { requireAuth, validateRequest } from "@tixproject/common";
 
 import { Ticket } from "../models/ticket";
 import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
-import { natsWrapper } from "../../nats-wrapper";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 

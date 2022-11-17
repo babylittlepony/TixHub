@@ -9,6 +9,8 @@ declare global {
   var signin: () => string[];
 }
 
+jest.mock("../nats-wrapper.ts");
+
 let mongo: any;
 // Start Mongo Memory Server first
 beforeAll(async () => {
