@@ -9,6 +9,7 @@ import {
   ticketNoTitle,
 } from "../../functions/create-ticket";
 import { Ticket } from "../../models/ticket";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("has a route handler to /api/tickets for POST req", async () => {
   const response = await request(app).post("/api/tickets").send({});
@@ -16,12 +17,9 @@ it("has a route handler to /api/tickets for POST req", async () => {
 });
 
 it("can only be accessed with authorized user", async () => {
-  const response = await request(app)
-    .post("/api/tickets")
-    .set("Cookie", signin())
-    .send({});
+  const res = await createTicket();
 
-  expect(response.statusCode).not.toEqual(401);
+  expect(res.statusCode).not.toEqual(401);
 });
 
 it("returns an error if invalid title is provided", async () => {
@@ -42,4 +40,10 @@ it("creates a ticket with valid inputs", async () => {
 
   tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
+});
+
+it("Publish an event", async () => {
+  await createTicket().expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

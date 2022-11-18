@@ -11,8 +11,22 @@ const startDB = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error("Mongo URI not found");
   }
+  if (!process.env.NATS_URL) {
+    throw new Error("Nats URL not found");
+  }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error("Nats Cluster Id not found");
+  }
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error("Nats Client Id not found");
+  }
+
   try {
-    await natsWrapper.connect("ticket", "test", "http://nats-srv:4222");
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
     natsWrapper.client.on("close", () => {
       // Closing NATS connection
       console.log("NATS connection closed");

@@ -3,6 +3,7 @@ import request from "supertest";
 import { app } from "../../app";
 import { createMongoId } from "../../functions/create-mongoId";
 import { createTicket } from "../../functions/create-ticket";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("returns 404 if tickets id doesnt exist", async () => {
   const id = createMongoId();
@@ -62,4 +63,20 @@ it("updates the ticket with valid inputs", async () => {
     .send();
   expect(updatedRes.body.title).toEqual("new title");
   expect(updatedRes.body.price).toEqual(99);
+});
+
+it("Publish an event and updating it", async () => {
+  const cookie = signin();
+  const res = await createTicket(cookie);
+
+  await request(app)
+    .put(`/api/tickets/${res.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "new title",
+      price: 99,
+    })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
