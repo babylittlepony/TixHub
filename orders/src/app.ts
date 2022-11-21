@@ -5,10 +5,10 @@ import cookieSession from "cookie-session";
 
 import { errorHandler, NotFoundError, extractJwt } from "@tixproject/common";
 
-import { createTicketRouter } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
-import { ticketListRouter } from "./routes/index";
-import { updateTicketRouter } from "./routes/update";
+import { indexOrderRouter } from "./routes/index";
+import { newOrderRouter } from "./routes/new";
+import { showOrderRouter } from "./routes/show";
+import { deleteOrderRouter } from "./routes/delete";
 
 const app = express();
 
@@ -27,10 +27,10 @@ app.use(extractJwt);
 /*-----------Middleware-----------*/
 
 /*-----------Routes-----------*/
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(ticketListRouter);
-app.use(updateTicketRouter);
+app.use(indexOrderRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(deleteOrderRouter);
 /*-----------Routes-----------*/
 
 /*-----------Error-----------*/

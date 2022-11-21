@@ -45,7 +45,7 @@ const startDB = async () => {
 
 /*---------------Start Server---------------*/
 app.listen(3000, () => {
-  console.log("Ticket service is running...");
+  console.log("Order service is running...");
   startDB().catch((err) => console.log(err));
 });
 /*---------------Start Server---------------*/
