@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import { app } from "../../app";
-import { createMongoId } from "../../functions/create-mongoId";
+import { createMongoId } from "@tixproject/common";
 import { createTicket } from "../../functions/create-ticket";
 
 it("returns 404 if the ticket is not found", async () => {

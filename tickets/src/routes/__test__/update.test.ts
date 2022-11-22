@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import { app } from "../../app";
-import { createMongoId } from "../../functions/create-mongoId";
+import { createMongoId } from "@tixproject/common";
 import { createTicket } from "../../functions/create-ticket";
 import { natsWrapper } from "../../nats-wrapper";
 

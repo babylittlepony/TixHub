@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {
   BadRequestError,
   NotFoundError,
+  OrderStatus,
   requireAuth,
   validateRequest,
 } from "@tixproject/common";
@@ -12,6 +13,8 @@ import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
 
 const router = express.Router();
+
+const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
 router.post(
   "/api/orders",
@@ -33,6 +36,19 @@ router.post(
     if (isReserved) {
       throw new BadRequestError("Ticket already reserved");
     }
+
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS); // Set expiration date for order (15 Minutes)
+
+    const order = Order.build({
+      // Set the order
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      ticket,
+    });
+
+    res.status(201).json(order); // Order successfully created
   }
 );
 
