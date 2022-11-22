@@ -19,10 +19,12 @@ const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 router.post(
   "/api/orders",
   requireAuth,
-  body("ticketId")
-    .notEmpty()
-    .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // Check the Ticket id is valid Mongo id
-    .withMessage("Ticket id not found/provided"),
+  [
+    body("ticketId")
+      .notEmpty()
+      .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // Check the Ticket id is valid Mongo id
+      .withMessage("Ticket id not found/provided"),
+  ],
   validateRequest,
   async (res: Response, req: Request) => {
     const { ticketId } = req.body;

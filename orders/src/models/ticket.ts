@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-import { Order, OrderStatus } from "./order";
+import { Order } from "./order";
+import { OrderStatus } from "@tixproject/common";
 
 interface TicketAttrs {
   title: string;
