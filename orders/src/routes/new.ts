@@ -27,7 +27,7 @@ router.post(
   ],
   validateRequest,
   async (res: Response, req: Request) => {
-    const { ticketId } = req.body;
+    const ticketId = req.body;
 
     const ticket = await Ticket.findById(ticketId); // Find the ticket that user is trying to order by the id
     if (!ticket) {

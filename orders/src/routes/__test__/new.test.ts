@@ -8,9 +8,8 @@ it("returns error if ticket doesnt exist", async () => {
   const res = await request(app)
     .post("/api/orders")
     .set("Cookie", signin())
-    .send(ticketId)
+    .send({ ticketId })
     .expect(404);
-  console.log(res);
 });
 
 it("returns error if ticket already reserved", async () => {});
