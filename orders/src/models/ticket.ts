@@ -11,7 +11,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
-  isReserved(): Promise<Boolean>;
+  isReserved(): Promise<boolean>;
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
@@ -20,12 +20,19 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 
 const ticketSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    price: { type: Number, required: true, min: 0 },
+    title: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
   },
   {
     toJSON: {
-      transform(doc, ret, options) {
+      transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
       },

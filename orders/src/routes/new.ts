@@ -49,8 +49,9 @@ router.post(
       expiresAt: expiration,
       ticket,
     });
+    await order.save().then((data) => console.log("Order success", data));
 
-    res.status(201).json(order); // Order successfully created
+    res.status(201).send(order); // Order successfully created
   }
 );
 

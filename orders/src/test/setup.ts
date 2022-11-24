@@ -15,7 +15,7 @@ let mongo: any;
 // Start Mongo Memory Server first
 beforeAll(async () => {
   jest.clearAllMocks();
-  mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create().catch((err) => console.error(err));
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
