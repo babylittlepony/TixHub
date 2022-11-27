@@ -26,8 +26,8 @@ router.post(
       .withMessage("Ticket id not found/provided"),
   ],
   validateRequest,
-  async (res: Response, req: Request) => {
-    const ticketId = req.body;
+  async (req: Request, res: Response) => {
+    const { ticketId } = req.body;
 
     const ticket = await Ticket.findById(ticketId); // Find the ticket that user is trying to order by the id
     if (!ticket) {
@@ -49,7 +49,10 @@ router.post(
       expiresAt: expiration,
       ticket,
     });
-    await order.save().then((data) => console.log("Order success", data));
+    await order
+      .save()
+      .then((data) => console.log("Order success", data))
+      .catch((err) => console.error(err));
 
     res.status(201).send(order); // Order successfully created
   }

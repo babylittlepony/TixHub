@@ -38,7 +38,7 @@ const startDB = async () => {
     await mongoose.connect(process.env.MONGO_URI); // Connect to MongoDB using env
     console.log("Connected to mongodb");
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 /*---------------Start Database---------------*/

@@ -14,17 +14,9 @@ it("returns error if ticket doesnt exist", async () => {
 });
 
 it("returns error if ticket already reserved", async () => {
-  const ticket = createTicket();
-  await ticket
-    .save()
-    .then((data) => console.log("Ticket saved", data))
-    .catch((err) => console.error(err));
+  const ticket = await createTicket();
 
-  const order = createOrder(ticket);
-  await order
-    .save()
-    .then((data) => console.log("Order created", data))
-    .catch((err) => console.error(err));
+  await createOrder(ticket);
 
   await request(app)
     .post("/api/orders")
@@ -34,17 +26,11 @@ it("returns error if ticket already reserved", async () => {
 });
 
 it("order a ticket", async () => {
-  const ticket = createTicket();
-  await ticket
-    .save()
-    .then((data) => console.log("Ticket saved", data))
-    .catch((err) => console.error(err));
-
+  const ticket = await createTicket();
   const req = await request(app)
     .post("/api/orders")
     .set("Cookie", signin())
-    .send({ ticketId: ticket._id });
+    .send({ ticketId: ticket.id });
 
-  // console.log(req);
   expect(req.statusCode).toEqual(201);
 });
