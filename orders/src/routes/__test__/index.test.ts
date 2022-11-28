@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
 import request from "supertest";
 import { app } from "../../app";
-import { createOrder, createTicket } from "../../function/create-order";
+import { createTicket } from "../../function/create-order";
 
 it("fetch order for the user", async () => {
   const ticketOne = await createTicket();
@@ -17,18 +16,24 @@ it("fetch order for the user", async () => {
     .send({ ticketId: ticketOne.id })
     .expect(201);
 
-  await request(app)
+  const { body: orderOne } = await request(app)
     .post("/api/orders")
     .set("Cookie", userTwo)
     .send({ ticketId: ticketTwo.id })
     .expect(201);
 
-  await request(app)
+  const { body: orderTwo } = await request(app)
     .post("/api/orders")
     .set("Cookie", userTwo)
     .send({ ticketId: ticketThree.id })
     .expect(201);
 
   const res = await request(app).get("/api/orders").set("Cookie", userTwo);
-  expect(res.status).toEqual(200);
+  console.log(res.body);
+
+  expect(res.body.length).toEqual(2);
+  expect(res.body[0].id).toEqual(orderOne.id);
+  expect(res.body[1].id).toEqual(orderTwo.id);
+  expect(res.body[0].ticket.id).toEqual(ticketTwo.id);
+  expect(res.body[1].ticket.id).toEqual(ticketThree.id);
 });

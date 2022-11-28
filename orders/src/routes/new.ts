@@ -19,12 +19,7 @@ const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 router.post(
   "/api/orders",
   requireAuth,
-  [
-    body("ticketId")
-      .notEmpty()
-      .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // Check the Ticket id is valid Mongo id
-      .withMessage("Ticket id not found/provided"),
-  ],
+  [body("ticketId").notEmpty().withMessage("Ticket id not found/provided")],
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
@@ -49,10 +44,9 @@ router.post(
       expiresAt: expiration,
       ticket,
     });
-    await order
-      .save()
-      .then((data) => console.log("Order success", data))
-      .catch((err) => console.error(err));
+    await order.save();
+    // .then((data) => console.log("Order success", data))
+    // .catch((err) => console.error(err));
 
     res.status(201).send(order); // Order successfully created
   }
