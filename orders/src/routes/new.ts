@@ -44,8 +44,6 @@ router.post(
       ticket,
     });
     await order.save();
-    // .then((data) => console.log("Order success", data))
-    // .catch((err) => console.error(err));
 
     res.status(201).send(order); // Order successfully created
   }
