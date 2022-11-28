@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 
 const router = express.Router();
 
-router.delete("/api/orders/:orderId", async (res: Response, req: Request) => {
+router.delete("/api/orders/:orderId", async (req: Request, res: Response) => {
   res.json();
 });
 

@@ -1,5 +1,5 @@
-import { requireAuth } from "@tixproject/common";
 import express, { Request, Response } from "express";
+import { requireAuth } from "@tixproject/common";
 
 import { Order } from "../models/order";
 

@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
-import mongoose from "mongoose";
-
+import { body } from "express-validator";
 import {
   BadRequestError,
   NotFoundError,
@@ -8,7 +7,7 @@ import {
   requireAuth,
   validateRequest,
 } from "@tixproject/common";
-import { body } from "express-validator";
+
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
 
