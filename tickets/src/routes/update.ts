@@ -46,7 +46,7 @@ router.put(
       title: ticket.title,
       price: ticket.price,
     });
-    res.status(200).json({});
+    res.status(200).json(ticket);
   }
 );
 
