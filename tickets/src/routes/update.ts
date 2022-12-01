@@ -45,6 +45,7 @@ router.put(
       userId: ticket.userId,
       title: ticket.title,
       price: ticket.price,
+      version: ticket.version,
     });
     res.status(200).json(ticket);
   }

@@ -30,6 +30,7 @@ router.post(
       title: ticket.title,
       price: ticket.price,
       userId: req.currentUser!.id,
+      version: ticket.version,
     });
 
     res.status(201).json(ticket);
