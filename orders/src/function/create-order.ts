@@ -1,9 +1,10 @@
-import { OrderStatus } from "@tixproject/common";
+import { createMongoId, OrderStatus } from "@tixproject/common";
 import { Order } from "../models/order";
 import { Ticket, TicketDoc } from "../models/ticket";
 
 export const createTicket = async (): Promise<TicketDoc> => {
   const ticket = Ticket.build({
+    id: createMongoId(),
     title: "CONCERT",
     price: 69,
   });

@@ -40,6 +40,7 @@ const ticketSchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
+        // Change "_id" to "id"
         ret.id = ret._id;
         delete ret._id;
       },
@@ -47,9 +48,11 @@ const ticketSchema = new mongoose.Schema(
   }
 );
 
+// Add version number to Ticket Model
 ticketSchema.set("versionKey", "version");
 ticketSchema.plugin(updateIfCurrentPlugin);
 
+// Add custom functions
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket({
     _id: attrs.id,
@@ -57,7 +60,6 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
     price: attrs.price,
   });
 };
-
 ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
   return Ticket.findOne({
     _id: event.id,
@@ -65,6 +67,7 @@ ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
   });
 };
 
+// Add custom methods
 ticketSchema.methods.isReserved = async function () {
   const existingOrder = await Order.findOne({
     // Find the existing order

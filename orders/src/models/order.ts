@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 import { OrderStatus } from "@tixproject/common";
 import { TicketDoc } from "./ticket";
@@ -45,6 +46,7 @@ const orderSchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
+        // Change "_id" to "id"
         ret.id = ret._id;
         delete ret._id;
       },
@@ -52,6 +54,11 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+// Add version number to Order Model
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
+
+// Add custom function
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
