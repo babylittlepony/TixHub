@@ -1,3 +1,4 @@
+import { OrderCreatedListener } from "./events/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 /*---------------Start Database---------------*/
@@ -19,12 +20,14 @@ const startDB = async () => {
       process.env.NATS_URL
     );
     natsWrapper.client.on("close", () => {
-      // Closing NATS connection
+      // Listening to NATS Close event and closed the process
       console.log("NATS connection closed");
       process.exit();
     });
     process.on("SIGTERM", () => natsWrapper.client.close()); // Closing NATS connection on Terminate Signal
     process.on("SIGINT", () => natsWrapper.client.close()); // Closing NATS connection on Interupt Signal
+
+    new OrderCreatedListener(natsWrapper.client).listen(); // Order Created event listener
   } catch (error) {
     console.log(error);
   }
