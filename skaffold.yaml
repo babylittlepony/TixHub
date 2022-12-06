@@ -38,3 +38,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: babylittlepony/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

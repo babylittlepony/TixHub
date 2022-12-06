@@ -5,6 +5,7 @@ import {
   validateRequest,
   NotFoundError,
   NotAuthorizedError,
+  BadRequestError,
 } from "@tixproject/common";
 
 import { Ticket } from "../models/ticket";
@@ -31,22 +32,29 @@ router.put(
       throw new NotFoundError();
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket");
+    }
+
     if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
 
     ticket.set({
+      // Update the Ticket
       title: req.body.title,
       price: req.body.price,
     });
-    await ticket.save();
+    await ticket.save(); // Save the Ticket
     new TicketUpdatedPublisher(natsWrapper.client).publish({
+      // Publish the Ticket
       id: ticket.id,
       userId: ticket.userId,
       title: ticket.title,
       price: ticket.price,
       version: ticket.version,
     });
+
     res.status(200).json(ticket);
   }
 );

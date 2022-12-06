@@ -4,6 +4,7 @@ import { app } from "../../app";
 import { createMongoId } from "@tixproject/common";
 import { createTicket } from "../../functions/create-ticket";
 import { natsWrapper } from "../../nats-wrapper";
+import { Ticket } from "../../models/ticket";
 
 it("returns 404 if tickets id doesnt exist", async () => {
   const id = createMongoId();
@@ -29,6 +30,7 @@ it("returns 401 if user not authorized to update ticket", async () => {
     .send({ title: "tist ", price: 69 })
     .expect(401);
 });
+
 it("returns 400 if user provides invalid title or price", async () => {
   const cookie = signin();
   const res = await createTicket(cookie).expect(201);
@@ -45,6 +47,7 @@ it("returns 400 if user provides invalid title or price", async () => {
     .send({ title: "test", price: -69 })
     .expect(400);
 });
+
 it("updates the ticket with valid inputs", async () => {
   const cookie = signin();
   const res = await createTicket(cookie);
@@ -79,4 +82,22 @@ it("Publish an event and updating it", async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it("rejects updating a reserved ticket", async () => {
+  const cookie = signin();
+  const res = await createTicket(cookie);
+
+  const ticket = await Ticket.findById(res.body.id);
+  ticket!.set({ orderId: createMongoId() });
+  await ticket!.save();
+
+  await request(app)
+    .put(`/api/tickets/${res.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "new title",
+      price: 99,
+    })
+    .expect(400);
 });
