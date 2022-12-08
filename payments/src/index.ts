@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
 import { app } from "./app";
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 /*---------------Start Database---------------*/
@@ -34,6 +36,10 @@ const startDB = async () => {
     });
     process.on("SIGTERM", () => natsWrapper.client.close()); // Closing NATS connection on Terminate Signal
     process.on("SIGINT", () => natsWrapper.client.close()); // Closing NATS connection on Interupt Signal
+
+    // Events listeners
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI); // Connect to MongoDB using env
     console.log("Connected to mongodb");
