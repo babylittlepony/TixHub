@@ -1,5 +1,5 @@
 import { createMongoId, OrderStatus } from "@tixproject/common";
-import { Order } from "../models/order";
+import { Order, OrderDoc } from "../models/order";
 import { Ticket, TicketDoc } from "../models/ticket";
 
 export const createTicket = async (): Promise<TicketDoc> => {
@@ -12,7 +12,7 @@ export const createTicket = async (): Promise<TicketDoc> => {
   return ticket;
 };
 
-export const createOrder = async (ticket: TicketDoc) => {
+export const createOrder = async (ticket: TicketDoc): Promise<OrderDoc> => {
   const order = Order.build({
     ticket: ticket,
     userId: "userid",
