@@ -6,7 +6,7 @@ import { createMongoId } from "@tixproject/common";
 
 declare global {
   // Declaring global function
-  var signin: () => string[];
+  var signin: (id?: string) => string[];
 }
 
 jest.mock("../nats-wrapper.ts");
@@ -35,10 +35,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = () => {
+global.signin = (id?: string) => {
   //Creating the global function
   const payload = {
-    id: createMongoId(),
+    id: id || createMongoId(),
     email: "test@test.com",
   };
 

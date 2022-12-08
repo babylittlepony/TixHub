@@ -5,6 +5,8 @@ import cookieSession from "cookie-session";
 
 import { errorHandler, NotFoundError, extractJwt } from "@tixproject/common";
 
+import { createChargeRouter } from "./routes/new";
+
 const app = express();
 
 app.set("trust proxy", true);
@@ -22,7 +24,7 @@ app.use(extractJwt);
 /*-----------Middleware-----------*/
 
 /*-----------Routes-----------*/
-
+app.use(createChargeRouter);
 /*-----------Routes-----------*/
 
 /*-----------Error-----------*/
