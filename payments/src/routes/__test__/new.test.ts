@@ -2,9 +2,8 @@ import { createMongoId, OrderStatus } from "@tixproject/common";
 import request from "supertest";
 import { app } from "../../app";
 import { Order } from "../../models/order";
+import { Payment } from "../../models/payment";
 import { stripe } from "../../stripe";
-
-jest.mock("../../stripe");
 
 it("throw not found error", async () => {
   await request(app)
@@ -56,14 +55,15 @@ it("throw bad request if trying to pay cancelled order", async () => {
     .expect(400);
 });
 
-it("returns 204 with valid inputs", async () => {
+it("returns 201 success with valid inputs", async () => {
   const user = createMongoId();
+  const price = Math.floor(Math.random() * 100000);
   const order = Order.build({
     id: createMongoId(),
     status: OrderStatus.Created,
     userId: user,
     version: 0,
-    price: 15,
+    price,
   });
   await order.save();
 
@@ -76,9 +76,17 @@ it("returns 204 with valid inputs", async () => {
     })
     .expect(201);
 
-  const stripeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+  const stripeCharges = await stripe.charges.list({ limit: 30 });
+  const stripeCharge = stripeCharges.data.find((charge) => {
+    return charge.amount === order.price * 100;
+  });
 
-  expect(stripeOptions.source).toEqual("tok_visa");
-  expect(stripeOptions.amount).toEqual(15 * 100);
-  expect(stripeOptions.currency).toEqual("usd");
+  expect(stripeCharge).toBeDefined();
+  expect(stripeCharge!.currency).toEqual("usd");
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: stripeCharge!.id,
+  });
+  expect(payment).not.toBeNull();
 });

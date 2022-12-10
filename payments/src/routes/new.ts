@@ -8,8 +8,10 @@ import {
   requireAuth,
   validateRequest,
 } from "@tixproject/common";
+
 import { Order } from "../models/order";
 import { stripe } from "../stripe";
+import { Payment } from "../models/payment";
 
 const router = express.Router();
 
@@ -33,11 +35,18 @@ router.post(
       throw new BadRequestError("Order has been cancelled");
     }
 
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: "usd",
-      amount: order.price * 100,
+      amount: order.price * 100, // Times 100 because stripe currency start at Cents
       source: token,
     });
+
+    const payment = Payment.build({
+      // Completed payment Saved to DB
+      orderId,
+      stripeId: charge.id,
+    });
+    await payment.save();
 
     res.status(201).json({ success: true });
   }

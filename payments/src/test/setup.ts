@@ -11,6 +11,10 @@ declare global {
 
 jest.mock("../nats-wrapper.ts");
 
+// Stripe Secret Key
+process.env.STRIPE_KEY =
+  "sk_test_51MCimNFj3dASAkzQObChKcDQKFBdJZQaLfzNSMrle1Z8VNy57Sm8YUy7xOAqciXs2R94988gNnSWnKjZRusmpDFp00Y5ji1mGR";
+
 let mongo: any;
 // Start Mongo Memory Server first
 beforeAll(async () => {
