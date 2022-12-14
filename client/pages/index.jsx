@@ -1,15 +1,26 @@
+import Link from "next/link";
+
 const LandingPage = ({ currentUser, tickets }) => {
   const ticketList = tickets.map((ticket) => {
     return (
       <tr
         key={ticket.id}
-        className="border-b transition duration-300 ease-in-out hover:bg-gray-100"
+        className=" border-b transition duration-300 ease-in-out hover:bg-gray-100 relative"
       >
-        <td className="pb-4 text-gray-900 font-light whitespace-nowrap">
+        <td className=" text-gray-900 font-light whitespace-nowrap m-0 ">
           {ticket.title}
         </td>
-        <td className="pb-4 text-gray-900 font-light whitespace-nowrap">
+        <td className=" text-gray-900 font-light whitespace-nowrap m-0 ">
           {ticket.price}
+        </td>
+        <td className="pb-4 text-gray-900 font-light whitespace-nowrap m-0  ">
+          <Link
+            className="px-5 py-1 bg-gray-300 text-black font-medium hover:bg-blue-900 border-gray-900 border-2 hover:text-white  focus:outline-none "
+            href="/tickets/[ticketId]"
+            as={`/tickets/${ticket.id}`}
+          >
+            View
+          </Link>
         </td>
       </tr>
     );
@@ -26,6 +37,9 @@ const LandingPage = ({ currentUser, tickets }) => {
             </th>
             <th className="text-lg font-bold text-gray-900  py-4 text-left">
               Price
+            </th>
+            <th className="text-lg font-bold text-gray-900  py-4 text-left">
+              Link
             </th>
           </tr>
         </thead>
