@@ -1,4 +1,5 @@
-const LandingPage = ({ currentUser }) => {
+const LandingPage = ({ currentUser, tickets }) => {
+  console.log(tickets);
   return currentUser ? (
     <div className="m-8">
       <h1 className="text-center text-4xl font-bold">You are signed in</h1>
@@ -10,8 +11,9 @@ const LandingPage = ({ currentUser }) => {
   );
 };
 
-LandingPage.getInitialProps = async (context, currentUser) => {
-  return {};
+LandingPage.getInitialProps = async (context, client, currentUser) => {
+  const { data } = await client.get("/api/tickets");
+  return { tickets: data };
 };
 
 export default LandingPage;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Router from "next/router";
 import useRequest from "../../hooks/use-request";
 
 const NewTicket = () => {
@@ -12,7 +13,7 @@ const NewTicket = () => {
       title,
       price,
     },
-    onSuccess: (ticket) => console.log(ticket),
+    onSuccess: () => Router.push("/"),
   });
 
   const onSubmit = (event) => {
@@ -22,6 +23,7 @@ const NewTicket = () => {
   };
 
   const onBlur = () => {
+    // Create a 2 digits decimal number
     const val = parseFloat(price);
 
     if (isNaN(val)) {
