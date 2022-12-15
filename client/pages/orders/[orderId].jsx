@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react"
+import StripeCheckout from "react-stripe-checkout"
 
-const OrderShow = ({ order }) => {
+const OrderShow = ({ order, currentUser }) => {
   const [timeLeft, setTimeLeft] = useState(0)
 
   useEffect(() => {
     const findTimeLeft = () => {
       const msLeft = new Date(order.expiresAt) - new Date() // Calculate the miliseconds left on the order
-      setTimeLeft(Math.round(msLeft / 1000))
+      setTimeLeft(Math.round(msLeft / 1000)) // Format the ms to seconds
     }
 
-    findTimeLeft()
-    const timerId = setInterval(findTimeLeft, 1000)
+    findTimeLeft() // Call immediately to instantly show the seconds
+    const timerId = setInterval(findTimeLeft, 1000) // Call timer every seconds
     return () => {
       clearInterval(timerId) // Turn off the timer when user no longer in the component
     }
@@ -27,6 +28,12 @@ const OrderShow = ({ order }) => {
   return (
     <div>
       <p>Time left to pay: {timeLeft} seconds</p>
+      <StripeCheckout
+        token={(token) => console.log(token)}
+        stripeKey="pk_test_51MCimNFj3dASAkzQHOOosOGHB2REMeD0bDC7lIKheyinivVRGCFwrZXSFp3JyuG9Oi6Z7HOxgBfpGgvknyTR4eKa00u9EFbbRT"
+        amount={order.ticket.price * 1000} // In cent
+        email={currentUser.email}
+      />
     </div>
   )
 }
