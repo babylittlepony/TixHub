@@ -1,10 +1,10 @@
-import { useState } from "react";
-import Router from "next/router";
-import useRequest from "../../hooks/use-request";
+import { useState } from "react"
+import Router from "next/router"
+import useRequest from "../../hooks/use-request"
 
 const NewTicket = () => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
+  const [title, setTitle] = useState("")
+  const [price, setPrice] = useState("")
 
   const { doRequest, errors } = useRequest({
     url: "/api/tickets",
@@ -14,24 +14,24 @@ const NewTicket = () => {
       price,
     },
     onSuccess: () => Router.push("/"),
-  });
+  })
 
   const onSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    doRequest();
-  };
+    doRequest()
+  }
 
   const onBlur = () => {
     // Create a 2 digits decimal number
-    const val = parseFloat(price);
+    const val = parseFloat(price)
 
     if (isNaN(val)) {
-      return;
+      return
     }
 
-    setPrice(val.toFixed(2));
-  };
+    setPrice(val.toFixed(2))
+  }
 
   return (
     <div className="w-full max-w-sm mx-auto ">
@@ -71,7 +71,7 @@ const NewTicket = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default NewTicket;
+export default NewTicket

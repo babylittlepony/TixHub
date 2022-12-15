@@ -1,5 +1,5 @@
-import Router from "next/router";
-import useRequest from "../../hooks/use-request";
+import Router from "next/router"
+import useRequest from "../../hooks/use-request"
 
 const TicketShow = ({ ticket }) => {
   const { doRequest, errors } = useRequest({
@@ -10,7 +10,7 @@ const TicketShow = ({ ticket }) => {
     },
     onSuccess: (order) =>
       Router.push("/orders/[orderId]", `/orders/${order.id}`),
-  });
+  })
 
   return (
     <div className="max-w-screen-lg m-8 ">
@@ -24,14 +24,14 @@ const TicketShow = ({ ticket }) => {
         Purchase
       </button>
     </div>
-  );
-};
+  )
+}
 
 TicketShow.getInitialProps = async (context, client) => {
-  const { ticketId } = context.query;
-  const { data } = await client.get(`/api/tickets/${ticketId}`);
+  const { ticketId } = context.query
+  const { data } = await client.get(`/api/tickets/${ticketId}`)
 
-  return { ticket: data };
-};
+  return { ticket: data }
+}
 
-export default TicketShow;
+export default TicketShow
