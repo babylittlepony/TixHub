@@ -18,7 +18,7 @@ const TicketShow = ({ ticket }) => {
       <p className="text-xl py-4">Price: ${ticket.price}</p>
       {errors}
       <button
-        onClick={doRequest}
+        onClick={() => doRequest()}
         className="px-2 py-1  bg-gray-300 text-black text-lg font-medium hover:bg-blue-900 border-gray-900 border-4 hover:text-white  focus:outline-none"
       >
         Purchase
