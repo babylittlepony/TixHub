@@ -25,11 +25,13 @@ export default ({ currentUser }) => {
   return (
     <nav className="bg-blue-900 text-gray-100 p-2 pl-56 mb-8">
       <div className="container flex flex-wrap flex-row justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
-          TickHub
+        <Link key={iconPage} href="/" className="text-xl font-bold">
+          TixHub
         </Link>
         <div>
-          <ul className="inline-flex">{links}</ul>
+          <ul key={links} className="inline-flex">
+            {links}
+          </ul>
         </div>
       </div>
     </nav>
