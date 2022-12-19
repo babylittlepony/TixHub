@@ -1,7 +1,7 @@
 import Link from "next/link"
 
-const LandingPage = ({ currentUser, tickets }) => {
-  const ticketList = tickets.map((ticket) => {
+const LandingPage = ({ currentUser, ticket }) => {
+  const ticketList = ticket.map((ticket) => {
     return (
       <tr
         key={ticket.id}
@@ -15,7 +15,7 @@ const LandingPage = ({ currentUser, tickets }) => {
         </td>
         <td className="pb-4 text-gray-900 font-light whitespace-nowrap m-0 text-center">
           <Link
-            className="px-5 py-1 bg-gray-300 text-black font-medium hover:bg-blue-900 border-gray-900 border-2 hover:text-white  focus:outline-none "
+            className="px-5 py-1 bg-gray-300 text-black font-light hover:bg-blue-900 border-gray-900 border-2 hover:text-white  focus:outline-none "
             href="/tickets/[ticketId]"
             as={`/tickets/${ticket.id}`}
           >
@@ -27,9 +27,9 @@ const LandingPage = ({ currentUser, tickets }) => {
   })
 
   return (
-    <div className="max-w-screen-lg mx-auto mt-8 ">
-      <h1 className="text-2xl">Tickets</h1>
-      <table className="min-w-full">
+    <div className="container max-w-screen-lg mx-auto p-4">
+      <h1 className="text-2xl">Tickets lists</h1>
+      <table className="min-w-full bg-white border-2 rounded-lg shadow-md">
         <thead className="bg-gray-200 border-b">
           <tr>
             <th className="text-lg font-bold text-gray-900  py-4 text-center">
@@ -43,7 +43,7 @@ const LandingPage = ({ currentUser, tickets }) => {
             </th>
           </tr>
         </thead>
-        <tbody>{ticketList}</tbody>
+        <tbody key={ticketList}>{ticketList}</tbody>
       </table>
     </div>
   )

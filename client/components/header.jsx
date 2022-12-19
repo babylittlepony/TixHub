@@ -12,7 +12,10 @@ export default ({ currentUser }) => {
     .map(({ label, href }) => {
       return (
         <Link href={href}>
-          <p className="px-4" key={label}>
+          <p
+            className="p-4 hover:bg-gray-200 hover:rounded-lg hover:text-black"
+            key={label}
+          >
             {label}
           </p>
         </Link>
@@ -20,9 +23,11 @@ export default ({ currentUser }) => {
     })
 
   return (
-    <nav className="m-4">
-      <div className="container flex flex-wrap flex-row justify-around">
-        <Link href="/">TickHub</Link>
+    <nav className="bg-blue-900 text-gray-100 p-2 pl-56 mb-8">
+      <div className="container flex flex-wrap flex-row justify-between items-center">
+        <Link href="/" className="text-xl font-bold">
+          TickHub
+        </Link>
         <div>
           <ul className="inline-flex">{links}</ul>
         </div>

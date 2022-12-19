@@ -34,25 +34,25 @@ const NewTicket = () => {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto ">
+    <div className="w-full max-w-sm mx-auto">
       <h1 className="text-center text-2xl mb-4">Create a Ticket</h1>
       <form className=" mx-auto w-[90%]" onSubmit={onSubmit}>
         <div className="mb-6 md:flex md:items-center">
           <label className="block text-xl font-medium text-gray-900 pr-4  md:text-right md:mb-0 ">
-            Title:
+            Title
           </label>
           <div>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               type="text"
-              className="bg-gray-200 appearance-none border-gray-200 rounded w-full py-2 px-4 text-gray-900 leading-tight focus:outline-none"
+              className="bg-gray-200 appearance-none border-gray-200 rounded py-2 px-4 text-gray-900 leading-tight focus:outline-none"
             />
           </div>
         </div>
-        <div className="mb-6 w-full md:flex md:items-center">
+        <div className="mb-6 md:flex md:items-center">
           <label className="block text-xl font-medium text-gray-900 pr-2">
-            Price:
+            Price
           </label>
           <div>
             <input
