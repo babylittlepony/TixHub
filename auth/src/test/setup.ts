@@ -25,7 +25,9 @@ beforeEach(async () => {
 })
 // Close connection after finished all test
 afterAll(async () => {
-  await mongo.stop()
+  if (mongo) {
+    await mongo.stop()
+  }
   await mongoose.connection.close()
 })
 
