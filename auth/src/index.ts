@@ -23,7 +23,7 @@ const startDB = async () => {
 /*---------------Start Server---------------*/
 app.listen(3000, () => {
   console.log("Auth service is running...")
-  console.log("For test purpose. 3")
+  console.log("For test purpose. 4")
 
   startDB().catch((err) => console.log(err))
 })
