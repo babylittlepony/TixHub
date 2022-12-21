@@ -29,15 +29,15 @@ const OrderShow = ({ order, currentUser }) => {
 
   if (timeLeft < 0) {
     return (
-      <div>
-        <p>Order expired</p>
+      <div className="grid place-items-center">
+        <p className="text-xl">Order expired</p>
       </div>
     )
   }
 
   return (
-    <div>
-      <p>Time left to pay: {timeLeft} seconds</p>
+    <div className="grid place-items-center">
+      <p className="text-xl pb-2">Time left to pay: {timeLeft} seconds</p>
       <StripeCheckout
         token={({ id }) => doRequest({ token: id })}
         stripeKey="pk_test_51MCimNFj3dASAkzQHOOosOGHB2REMeD0bDC7lIKheyinivVRGCFwrZXSFp3JyuG9Oi6Z7HOxgBfpGgvknyTR4eKa00u9EFbbRT"
