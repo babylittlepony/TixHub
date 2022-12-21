@@ -7,12 +7,12 @@ const OrderIndex = ({ orders }) => {
     return (
       <tr
         key={order.id}
-        className=" border-b transition duration-300 ease-in-out hover:bg-gray-100 relative"
+        className="text-xl border-b transition duration-300 ease-in-out hover:bg-gray-100 relative"
       >
-        <td className="text-lg text-gray-900 font-light whitespace-nowrap m-0 text-center">
+        <td className=" text-gray-900 font-light whitespace-nowrap m-0 text-center">
           {order.ticket.title}
         </td>
-        <td className="text-lg text-gray-900 font-light whitespace-nowrap m-0 text-center">
+        <td className=" text-gray-900 font-light whitespace-nowrap m-0 text-center">
           {order.status}
         </td>
         <td className="pb-4 text-gray-900 font-light whitespace-nowrap m-0 text-center">
@@ -43,16 +43,12 @@ const OrderIndex = ({ orders }) => {
     <div className="container max-w-screen-lg mx-auto p-4">
       <table className="min-w-full bg-white border-2 rounded-lg shadow-md">
         <thead className="bg-gray-200 border-b">
-          <tr>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
-              Title
-            </th>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
+          <tr className="text-xl">
+            <th className="font-bold text-gray-900  py-4 text-center">Title</th>
+            <th className="font-bold text-gray-900  py-4 text-center">
               Status
             </th>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
-              Link
-            </th>
+            <th className="font-bold text-gray-900  py-4 text-center">Link</th>
           </tr>
         </thead>
         <tbody key={orderList}>{orderList}</tbody>

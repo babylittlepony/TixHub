@@ -5,7 +5,7 @@ const LandingPage = ({ currentUser, ticket }) => {
     return (
       <tr
         key={ticket.id}
-        className=" border-b transition duration-300 ease-in-out hover:bg-gray-200 relative"
+        className="text-xl border-b transition duration-300 ease-in-out hover:bg-gray-200 relative"
       >
         <td className=" text-gray-900 font-light whitespace-nowrap m-0 text-center">
           {ticket.title}
@@ -32,13 +32,13 @@ const LandingPage = ({ currentUser, ticket }) => {
       <table className="min-w-full bg-white border-2 rounded-lg shadow-md">
         <thead className="bg-gray-200 border-b">
           <tr>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
+            <th className="text-xl font-bold text-gray-900  py-4 text-center">
               Title
             </th>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
+            <th className="text-xl font-bold text-gray-900  py-4 text-center">
               Price
             </th>
-            <th className="text-lg font-bold text-gray-900  py-4 text-center">
+            <th className="text-xl font-bold text-gray-900  py-4 text-center">
               Link
             </th>
           </tr>
